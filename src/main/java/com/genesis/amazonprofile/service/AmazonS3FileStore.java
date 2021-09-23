@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @AllArgsConstructor
-@Service
+@Service("aws")
 public class AmazonS3FileStore implements AppFileStore{
 
     private final AmazonS3 amazonS3;
@@ -29,7 +29,6 @@ public class AmazonS3FileStore implements AppFileStore{
         Map<String, String> metadata = new HashMap<>();
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
-
         Optional<Map<String, String>> optionalMetaData = Optional.of(metadata);
         String path = BucketName.PROFILE.getBucketName() + "/" + UUID.randomUUID();
         String fileName = file.getOriginalFilename();
