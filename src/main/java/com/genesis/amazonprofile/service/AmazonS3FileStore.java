@@ -6,13 +6,16 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
+import com.genesis.amazonprofile.configuration.BucketName;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -20,9 +23,16 @@ public class AmazonS3FileStore implements AppFileStore{
 
     private final AmazonS3 amazonS3;
 
-    public void upload(String path, String fileName,
-                       Optional<Map<String, String>> optionalMetaData,
-                       InputStream inputStream){
+
+    @Override
+    public Map<String, String> upload(MultipartFile file) {
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("Content-Type", file.getContentType());
+        metadata.put("Content-Length", String.valueOf(file.getSize()));
+
+        Optional<Map<String, String>> optionalMetaData = Optional.of(metadata);
+        String path = BucketName.PROFILE.getBucketName() + "/" + UUID.randomUUID();
+        String fileName = file.getOriginalFilename();
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         optionalMetaData.ifPresent(map -> {
@@ -31,13 +41,19 @@ public class AmazonS3FileStore implements AppFileStore{
             }
         });
 
+        Map<String, String> response = new HashMap<>();
+        response.put("path", path);
+        response.put("fileName", fileName);
+
         try{
-            amazonS3.putObject(path, fileName, inputStream, objectMetadata);
-        }catch(AmazonServiceException e){
+            amazonS3.putObject(path, fileName, file.getInputStream(), objectMetadata);
+            return response;
+        }catch(AmazonServiceException | IOException e){
             throw new IllegalStateException("Failed to upload the file", e);
         }
     }
 
+    @Override
     public byte[] download(String path, String key){
         try{
             S3Object object = amazonS3.getObject(path, key);
