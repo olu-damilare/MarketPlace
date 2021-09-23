@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProfileService {
 
-    Profile saveProfile(String firstName, String lastName, String email, MultipartFile file);
-    byte[] downloadProfileImage(Long id);
+    Profile register(Profile profile, MultipartFile file);
+    byte[] downloadProfileImage(String id);
     List<Profile> getAllProfiles();
 }
