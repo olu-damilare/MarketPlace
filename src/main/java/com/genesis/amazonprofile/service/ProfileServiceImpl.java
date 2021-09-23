@@ -1,14 +1,11 @@
 package com.genesis.amazonprofile.service;
 
-import com.genesis.amazonprofile.configuration.BucketName;
 import com.genesis.amazonprofile.model.Profile;
 import com.genesis.amazonprofile.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.session.FileStore;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.*;
 
 import static org.apache.http.entity.ContentType.*;
@@ -18,7 +15,7 @@ import static org.apache.http.entity.ContentType.*;
 @AllArgsConstructor
 public class ProfileServiceImpl implements ProfileService{
 
-    private final DataStore dataStore;
+    private final AppFileStore dataStore;
     private final ProfileRepository repository;
 
     @Override
@@ -29,33 +26,22 @@ public class ProfileServiceImpl implements ProfileService{
 
             validateImageType(file);
 
-            Map<String, String> metadata = new HashMap<>();
-            metadata.put("Content-Type", file.getContentType());
-            metadata.put("Content-Length", String.valueOf(file.getSize()));
-
-            String path = BucketName.PROFILE.getBucketName() + "/" + UUID.randomUUID();
-            String filename = file.getOriginalFilename();
-
-            uploadFile(file, metadata, path, filename);
+           Map<String, String> values = dataStore.upload(file);
+           String path = values.get("path");
+           String fileName = values.get("fileName");
 
             Profile profile = Profile.builder()
                                 .firstName(firstName)
                                 .lastName(lastName)
                                 .email(email)
                                 .imagePath(path)
-                                .imageFileName(filename)
+                                .imageFileName(fileName)
                                 .build();
 
             return repository.save(profile);
     }
 
-    private void uploadFile(MultipartFile file, Map<String, String> metadata, String path, String filename) {
-        try{
-            dataStore.upload(path, filename, Optional.of(metadata), file.getInputStream());
-        }catch(IOException e){
-            throw new IllegalStateException("Failed to upload file", e);
-        }
-    }
+
 
     private void validateImageType(MultipartFile file) {
         List<String> imageTypes = Arrays.asList(IMAGE_PNG.getMimeType(), IMAGE_BMP.getMimeType(),
