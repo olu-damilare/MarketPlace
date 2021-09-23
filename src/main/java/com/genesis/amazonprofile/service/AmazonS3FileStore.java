@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class DataStore {
+public class AmazonS3FileStore implements AppFileStore{
 
     private final AmazonS3 amazonS3;
 
