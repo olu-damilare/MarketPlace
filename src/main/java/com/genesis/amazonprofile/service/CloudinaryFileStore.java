@@ -3,6 +3,7 @@ package com.genesis.amazonprofile.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +16,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+@Service("cloud")
+@Slf4j
 public class CloudinaryFileStore implements AppFileStore{
 
     @Autowired
@@ -26,7 +28,6 @@ public class CloudinaryFileStore implements AppFileStore{
     public Map<String, String> upload(MultipartFile file) {
 
         try {
-            byte[] byteContent = file.getBytes();
             Map<?, ?> imageProperties = ObjectUtils.asMap("transformation", new Transformation()
                     .background("black")
                     .gravity("face")
@@ -36,7 +37,8 @@ public class CloudinaryFileStore implements AppFileStore{
                     .chain()
                     .opacity(50).chain());
 
-            Map<Object, Object> uploadResponse = cloudinary.uploader().upload(byteContent, imageProperties);
+            Map uploadResponse = cloudinary.uploader().upload(file.getBytes(), imageProperties);
+            log.info("res ---> {}", uploadResponse);
             String path = (String) uploadResponse.get("url");
             String fileName = file.getOriginalFilename();
 
