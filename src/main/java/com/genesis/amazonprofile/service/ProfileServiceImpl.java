@@ -1,8 +1,10 @@
 package com.genesis.amazonprofile.service;
 
 import com.genesis.amazonprofile.model.Profile;
-import com.genesis.amazonprofile.repository.ProfileRepository;
+import com.genesis.amazonprofile.repository.AppProfileRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,14 +14,19 @@ import static org.apache.http.entity.ContentType.*;
 
 
 @Service
-@AllArgsConstructor
 public class ProfileServiceImpl implements ProfileService{
 
+
     private final AppFileStore dataStore;
-    private final ProfileRepository repository;
+    private final AppProfileRepository repository;
+
+    public ProfileServiceImpl(@Qualifier("aws") AppFileStore dataStore, AppProfileRepository repository) {
+        this.dataStore = dataStore;
+        this.repository = repository;
+    }
 
     @Override
-    public Profile saveProfile(String firstName, String lastName, String email, MultipartFile file) {
+    public Profile register(Profile profile, MultipartFile file) {
             if(file.isEmpty()){
                 throw new IllegalStateException("Cannot upload empty file");
             }
@@ -30,13 +37,8 @@ public class ProfileServiceImpl implements ProfileService{
            String path = values.get("path");
            String fileName = values.get("fileName");
 
-            Profile profile = Profile.builder()
-                                .firstName(firstName)
-                                .lastName(lastName)
-                                .email(email)
-                                .imagePath(path)
-                                .imageFileName(fileName)
-                                .build();
+           profile.setImagePath(path);
+           profile.setImageFileName(fileName);
 
             return repository.save(profile);
     }
@@ -52,7 +54,7 @@ public class ProfileServiceImpl implements ProfileService{
     }
 
     @Override
-    public byte[] downloadProfileImage(Long id) {
+    public byte[] downloadProfileImage(String id) {
         Profile profile = repository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid profile id"));
         return dataStore.download(profile.getImagePath(), profile.getImageFileName());
     }
