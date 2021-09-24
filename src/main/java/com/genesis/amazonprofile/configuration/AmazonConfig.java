@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AmazonConfig {
 
-    @Value("amazon.access.key")
+    @Value("${amazon.access.key}")
     private String accessKey;
 
-    @Value("amazon.secret.key")
+    @Value("${amazon.secret.key}")
     private String secretKey;
 
     @Bean
