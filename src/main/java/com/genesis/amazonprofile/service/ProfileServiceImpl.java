@@ -1,7 +1,7 @@
 package com.genesis.amazonprofile.service;
 
 import com.genesis.amazonprofile.model.User;
-import com.genesis.amazonprofile.repository.AppProfileRepository;
+import com.genesis.amazonprofile.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +15,9 @@ import static org.apache.http.entity.ContentType.*;
 public class ProfileServiceImpl implements ProfileService{
 
     private final AppFileStore dataStore;
-    private final AppProfileRepository repository;
+    private final UserRepository repository;
 
-    public ProfileServiceImpl(@Qualifier("aws") AppFileStore dataStore, AppProfileRepository repository) {
+    public ProfileServiceImpl(@Qualifier("aws") AppFileStore dataStore, UserRepository repository) {
         this.dataStore = dataStore;
         this.repository = repository;
     }
