@@ -1,7 +1,7 @@
 package com.genesis.amazonprofile.configuration;
 
 public enum BucketName {
-    PROFILE("spring-profile-storage");
+    USER("spring-user-storage");
 
     private final String bucketName;
 
