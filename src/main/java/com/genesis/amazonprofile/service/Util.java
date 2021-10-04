@@ -1,17 +1,15 @@
 package com.genesis.amazonprofile.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.genesis.amazonprofile.model.Profile;
-import org.springframework.stereotype.Component;
+import com.genesis.amazonprofile.model.User;
 
 
 public class Util {
-    public static Profile toProfile(String profile) throws JsonProcessingException {
+    public static User toProfile(String user) throws JsonProcessingException {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Profile userProfile = mapper.readValue(profile, Profile.class);
+            User userProfile = mapper.readValue(user, User.class);
             return userProfile;
         } catch (JsonProcessingException e) {
             throw e;
