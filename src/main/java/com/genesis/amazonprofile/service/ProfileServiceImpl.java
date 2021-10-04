@@ -1,9 +1,7 @@
 package com.genesis.amazonprofile.service;
 
-import com.genesis.amazonprofile.model.Profile;
+import com.genesis.amazonprofile.model.User;
 import com.genesis.amazonprofile.repository.AppProfileRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +23,7 @@ public class ProfileServiceImpl implements ProfileService{
     }
 
     @Override
-    public Profile register(Profile profile, MultipartFile file) {
+    public User register(User user, MultipartFile file) {
             if(file.isEmpty()){
                 throw new IllegalStateException("Cannot upload empty file");
             }
@@ -36,10 +34,10 @@ public class ProfileServiceImpl implements ProfileService{
            String path = values.get("path");
            String fileName = values.get("fileName");
 
-           profile.setImagePath(path);
-           profile.setImageFileName(fileName);
+           user.setImagePath(path);
+           user.setImageFileName(fileName);
 
-            return repository.save(profile);
+            return repository.save(user);
     }
 
 
@@ -54,12 +52,12 @@ public class ProfileServiceImpl implements ProfileService{
 
     @Override
     public byte[] downloadProfileImage(String id) {
-        Profile profile = repository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid profile id"));
-        return dataStore.download(profile.getImagePath(), profile.getImageFileName());
+        User user = repository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid user id"));
+        return dataStore.download(user.getImagePath(), user.getImageFileName());
     }
 
     @Override
-    public List<Profile> getAllProfiles() {
+    public List<User> getAllProfiles() {
         return repository.findAll();
     }
 }
