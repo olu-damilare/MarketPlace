@@ -16,7 +16,6 @@ import static org.apache.http.entity.ContentType.*;
 @Service
 public class ProfileServiceImpl implements ProfileService{
 
-
     private final AppFileStore dataStore;
     private final AppProfileRepository repository;
 
@@ -31,7 +30,7 @@ public class ProfileServiceImpl implements ProfileService{
                 throw new IllegalStateException("Cannot upload empty file");
             }
 
-            validateImageType(file);
+          validateImageType(file);
 
            Map<String, String> values = dataStore.upload(file);
            String path = values.get("path");
