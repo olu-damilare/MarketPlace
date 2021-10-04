@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.genesis</groupId>
-    <artifactId>amazon-profile</artifactId>
+    <artifactId>amazon-user</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>amazon-profile</name>
+    <name>amazon-user</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
