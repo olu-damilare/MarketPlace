@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import java.util.UUID;
@@ -19,7 +20,8 @@ import java.util.UUID;
 public class Profile {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String firstName;
     private String lastName;
     @Email(message = "Invalid email address")
@@ -27,10 +29,4 @@ public class Profile {
     private String imagePath;
     private String imageFileName;
 
-    public Profile(String firstName, String lastName, String email) {
-        id = UUID.randomUUID().toString();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
 }
