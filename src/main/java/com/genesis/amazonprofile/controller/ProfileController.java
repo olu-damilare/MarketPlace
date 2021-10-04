@@ -2,7 +2,7 @@ package com.genesis.amazonprofile.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.genesis.amazonprofile.model.Profile;
+import com.genesis.amazonprofile.model.User;
 import com.genesis.amazonprofile.service.ProfileService;
 import com.genesis.amazonprofile.service.Util;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +24,9 @@ public class ProfileController {
     private ProfileService profileService;
 
     @GetMapping
-    public ResponseEntity<List<Profile>> getAllProfiles(){
-      List<Profile> profiles = profileService.getAllProfiles();
-      return new ResponseEntity<>(profiles, HttpStatus.OK);
+    public ResponseEntity<List<User>> getAllProfiles(){
+      List<User> users = profileService.getAllProfiles();
+      return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping(
@@ -34,18 +34,18 @@ public class ProfileController {
             consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Profile> register( @RequestPart("profile") String profile, @RequestPart("image") MultipartFile image
+    public ResponseEntity<User> register(@RequestPart("user") String user, @RequestPart("image") MultipartFile image
     )  {
-        log.info("profile ---> {}", profile);
-        Profile userDetails = null;
+        log.info("user ---> {}", user);
+        User userDetails = null;
         try {
-            userDetails = Util.toProfile(profile);
+            userDetails = Util.toProfile(user);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        log.info("profile ---> {}", userDetails);
-        Profile registeredProfile = profileService.register(userDetails, image);
-        return new ResponseEntity<>(registeredProfile, HttpStatus.OK);
+        log.info("user ---> {}", userDetails);
+        User registeredUser = profileService.register(userDetails, image);
+        return new ResponseEntity<>(registeredUser, HttpStatus.OK);
     }
 
     @GetMapping(value = "{id}/image/download")
