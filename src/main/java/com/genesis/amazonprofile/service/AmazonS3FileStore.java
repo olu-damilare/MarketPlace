@@ -30,7 +30,7 @@ public class AmazonS3FileStore implements AppFileStore{
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
         Optional<Map<String, String>> optionalMetaData = Optional.of(metadata);
-        String path = BucketName.PROFILE.getBucketName() + "/" + UUID.randomUUID();
+        String path = BucketName.USER.getBucketName() + "/" + UUID.randomUUID();
         String fileName = file.getOriginalFilename();
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
