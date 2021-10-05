@@ -7,12 +7,7 @@ import com.genesis.amazonprofile.model.User;
 
 public class Util {
     public static User toProfile(String user) throws JsonProcessingException {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            User userProfile = mapper.readValue(user, User.class);
-            return userProfile;
-        } catch (JsonProcessingException e) {
-            throw e;
-        }
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(user, User.class);
     }
 }
