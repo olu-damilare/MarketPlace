@@ -1,8 +1,9 @@
-package com.genesis.amazonprofile.service;
+package com.genesis.amazonprofile.service.userService;
 
 import com.genesis.amazonprofile.enums.Roles;
 import com.genesis.amazonprofile.model.User;
 import com.genesis.amazonprofile.repository.userRepository.UserRepository;
+import com.genesis.amazonprofile.service.fileServices.AppFileStore;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsersByRole(Roles role) {
+    public List<User> getAllUsers(Roles role) {
         return null;
     }
 }
