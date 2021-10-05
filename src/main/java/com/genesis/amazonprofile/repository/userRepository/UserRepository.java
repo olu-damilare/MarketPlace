@@ -1,4 +1,4 @@
-package com.genesis.amazonprofile.repository;
+package com.genesis.amazonprofile.repository.userRepository;
 
 import com.genesis.amazonprofile.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
