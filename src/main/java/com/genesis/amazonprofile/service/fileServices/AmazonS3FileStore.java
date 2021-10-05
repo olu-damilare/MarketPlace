@@ -1,4 +1,4 @@
-package com.genesis.amazonprofile.service;
+package com.genesis.amazonprofile.service.fileServices;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
