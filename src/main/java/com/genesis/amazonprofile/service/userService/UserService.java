@@ -1,4 +1,4 @@
-package com.genesis.amazonprofile.service;
+package com.genesis.amazonprofile.service.userService;
 
 import com.genesis.amazonprofile.enums.Roles;
 import com.genesis.amazonprofile.model.User;
@@ -13,5 +13,5 @@ public interface UserService {
     User register(User user, MultipartFile file);
     byte[] downloadProfileImage(Long id);
     List<User> getAllUsers();
-    List<User> getAllUsersByRole(Roles role);
+    List<User> getAllUsers(Roles role);
 }
