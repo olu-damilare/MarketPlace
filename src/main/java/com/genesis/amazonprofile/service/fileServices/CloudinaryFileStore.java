@@ -1,4 +1,4 @@
-package com.genesis.amazonprofile.service;
+package com.genesis.amazonprofile.service.fileServices;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
