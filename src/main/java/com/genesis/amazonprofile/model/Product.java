@@ -14,11 +14,10 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer productId;
+    private Long productId;
     private String productName;
     private String desc;
     private String imagePath;
     private String imageFileName;
-    @ManyToOne
-    private User merchant;
+    private Long merchantId;
 }
