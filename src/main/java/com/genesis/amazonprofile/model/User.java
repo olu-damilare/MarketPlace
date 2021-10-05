@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -30,5 +29,7 @@ public class User {
     private String imageFileName;
     @ElementCollection
     private Set<Roles> roles = new HashSet<Roles>();
+    // TODO : encrypt password
+    private String password;
 
 }
