@@ -1,7 +1,8 @@
 package com.genesis.amazonprofile.service;
 
+import com.genesis.amazonprofile.enums.Roles;
 import com.genesis.amazonprofile.model.User;
-import com.genesis.amazonprofile.repository.UserRepository;
+import com.genesis.amazonprofile.repository.userRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,12 +13,12 @@ import static org.apache.http.entity.ContentType.*;
 
 
 @Service
-public class ProfileServiceImpl implements ProfileService{
+public class UserServiceImpl implements UserService {
 
     private final AppFileStore dataStore;
     private final UserRepository repository;
 
-    public ProfileServiceImpl(@Qualifier("aws") AppFileStore dataStore, UserRepository repository) {
+    public UserServiceImpl(@Qualifier("aws") AppFileStore dataStore, UserRepository repository) {
         this.dataStore = dataStore;
         this.repository = repository;
     }
@@ -51,13 +52,18 @@ public class ProfileServiceImpl implements ProfileService{
     }
 
     @Override
-    public byte[] downloadProfileImage(String id) {
+    public byte[] downloadProfileImage(Long id) {
         User user = repository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid user id"));
         return dataStore.download(user.getImagePath(), user.getImageFileName());
     }
 
     @Override
-    public List<User> getAllProfiles() {
+    public List<User> getAllUsers() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<User> getAllUsersByRole(Roles role) {
+        return null;
     }
 }
