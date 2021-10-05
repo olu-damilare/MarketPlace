@@ -3,7 +3,7 @@ package com.genesis.amazonprofile.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.genesis.amazonprofile.model.User;
-import com.genesis.amazonprofile.service.ProfileService;
+import com.genesis.amazonprofile.service.userService.UserService;
 import com.genesis.amazonprofile.service.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,14 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("api/v1/profiles/")
-public class ProfileController {
+public class UserController {
 
     @Autowired
-    private ProfileService profileService;
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<List<User>> getAllProfiles(){
-      List<User> users = profileService.getAllProfiles();
+      List<User> users = userService.getAllUsers();
       return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
@@ -44,13 +44,13 @@ public class ProfileController {
             e.printStackTrace();
         }
         log.info("user ---> {}", userDetails);
-        User registeredUser = profileService.register(userDetails, image);
+        User registeredUser = userService.register(userDetails, image);
         return new ResponseEntity<>(registeredUser, HttpStatus.OK);
     }
 
     @GetMapping(value = "{id}/image/download")
-    public byte[] downloadProfileImage(@PathVariable("id") String id){
-        return profileService.downloadProfileImage(id);
+    public byte[] downloadProfileImage(@PathVariable("id") Long id){
+        return userService.downloadProfileImage(id);
     }
 
 }
