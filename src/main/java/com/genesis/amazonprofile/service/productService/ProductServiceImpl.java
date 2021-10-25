@@ -6,26 +6,26 @@ import com.genesis.amazonprofile.model.Product;
 import com.genesis.amazonprofile.model.ProductDetail;
 import com.genesis.amazonprofile.model.User;
 import com.genesis.amazonprofile.repository.productRepository.ProductRepository;
-import com.genesis.amazonprofile.repository.userRepository.UserRepository;
+import com.genesis.amazonprofile.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepo;
     @Autowired
-    private UserRepository userRepo;
+    private UserService userservice;
 
     @Override
     public Product addProduct(Product product) {
-        User merchant = userRepo.findById(product.getMerchantId()).orElseThrow(() -> new InvalidIdException("Invalid merchant id"));
-        if(product.getProductName() == null || product.getProductName().length() < 1){
+        User merchant = userservice.findById(product.getMerchantId()).orElseThrow(() -> new InvalidIdException("Invalid merchant id"));
+        if (product.getProductName() == null || product.getProductName().isEmpty() || product.getProductName().isBlank()) {
             throw new InvalidDataException("Product name cannot be empty");
         }
-        if(product.getDesc() == null || product.getDesc().length() < 1){
+        if (product.getDesc() == null || product.getDesc().isEmpty() || product.getDesc().isBlank()) {
             throw new InvalidDataException("Product description cannot be empty");
         }
         return productRepo.save(product);
