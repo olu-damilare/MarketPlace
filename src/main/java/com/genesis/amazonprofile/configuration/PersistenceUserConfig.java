@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 
 @Configuration
-@PropertySource({ "classpath:application.properties" })
+@PropertySource({"classpath:application.properties"})
 @EnableJpaRepositories(
         basePackages = "com.genesis.amazonprofile.repository.userRepository",
         entityManagerFactoryRef = "userEntityManager",
