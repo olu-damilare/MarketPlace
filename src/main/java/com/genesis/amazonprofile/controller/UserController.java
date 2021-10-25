@@ -24,18 +24,18 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllProfiles(){
-      List<User> users = userService.getAllUsers();
-      return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<List<User>> getAllProfiles() {
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping(
             path = "register",
-            consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<User> register(@RequestPart("user") String user, @RequestPart("image") MultipartFile image
-    )  {
+    ) {
         log.info("user ---> {}", user);
         User userDetails = null;
         try {
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping(value = "{id}/image/download")
-    public byte[] downloadProfileImage(@PathVariable("id") Long id){
+    public byte[] downloadProfileImage(@PathVariable("id") Long id) {
         return userService.downloadProfileImage(id);
     }
 
