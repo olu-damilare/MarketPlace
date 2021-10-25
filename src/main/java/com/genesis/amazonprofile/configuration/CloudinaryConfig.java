@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 @Slf4j
 @Configuration()
 public class CloudinaryConfig {
@@ -19,14 +20,14 @@ public class CloudinaryConfig {
     private String secretKey;
 
     @Bean
-    public Cloudinary cloudinary(){
-        log.info("-->{}",cloudName);
-        log.info("-->{}",apiKey);
-        log.info("-->{}",secretKey);
+    public Cloudinary cloudinary() {
+        log.info("-->{}", cloudName);
+        log.info("-->{}", apiKey);
+        log.info("-->{}", secretKey);
         return new Cloudinary(ObjectUtils.asMap(
-                    "cloud_name", cloudName,
-                    "api_key", apiKey,
-                    "api_secret", secretKey));
+                "cloud_name", cloudName,
+                "api_key", apiKey,
+                "api_secret", secretKey));
 
     }
 }
