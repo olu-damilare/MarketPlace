@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @Service("aws")
-public class AmazonS3FileStore implements AppFileStore{
+public class AmazonS3FileStore implements AppFileStore {
 
     private final AmazonS3 amazonS3;
 
@@ -35,7 +35,7 @@ public class AmazonS3FileStore implements AppFileStore{
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         optionalMetaData.ifPresent(map -> {
-            if(!map.isEmpty()) {
+            if (!map.isEmpty()) {
                 map.forEach(objectMetadata::addUserMetadata);
             }
         });
@@ -44,21 +44,21 @@ public class AmazonS3FileStore implements AppFileStore{
         response.put("path", path);
         response.put("fileName", fileName);
 
-        try{
+        try {
             amazonS3.putObject(path, fileName, file.getInputStream(), objectMetadata);
             return response;
-        }catch(AmazonServiceException | IOException e){
+        } catch (AmazonServiceException | IOException e) {
             throw new IllegalStateException("Failed to upload the file", e);
         }
     }
 
     @Override
-    public byte[] download(String path, String key){
-        try{
+    public byte[] download(String path, String key) {
+        try {
             S3Object object = amazonS3.getObject(path, key);
             S3ObjectInputStream objectContent = object.getObjectContent();
             return IOUtils.toByteArray(objectContent);
-        }catch(AmazonServiceException | IOException e){
+        } catch (AmazonServiceException | IOException e) {
             throw new IllegalStateException("Failed to download the file", e);
         }
     }
