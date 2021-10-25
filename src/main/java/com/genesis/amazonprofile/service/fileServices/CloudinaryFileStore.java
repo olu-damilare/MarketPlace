@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Service("cloud")
 @Slf4j
-public class CloudinaryFileStore implements AppFileStore{
+public class CloudinaryFileStore implements AppFileStore {
 
     @Autowired
     private Cloudinary cloudinary;
