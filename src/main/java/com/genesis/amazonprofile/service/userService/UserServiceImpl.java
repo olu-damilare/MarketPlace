@@ -26,28 +26,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(User user, MultipartFile file) {
-            if(file.isEmpty()){
-                throw new IllegalStateException("Cannot upload empty file");
-            }
+        if (file.isEmpty()) {
+            throw new IllegalStateException("Cannot upload empty file");
+        }
 
-          validateImageType(file);
+        validateImageType(file);
 
-           Map<String, String> values = dataStore.upload(file);
-           String path = values.get("path");
-           String fileName = values.get("fileName");
+        Map<String, String> values = dataStore.upload(file);
+        String path = values.get("path");
+        String fileName = values.get("fileName");
 
-           user.setImagePath(path);
-           user.setImageFileName(fileName);
+        user.setImagePath(path);
+        user.setImageFileName(fileName);
 
-            return repository.save(user);
+        return repository.save(user);
     }
-
 
 
     private void validateImageType(MultipartFile file) {
         List<String> imageTypes = Arrays.asList(IMAGE_PNG.getMimeType(), IMAGE_BMP.getMimeType(),
-                                               IMAGE_GIF.getMimeType(), IMAGE_JPEG.getMimeType());
-        if(!imageTypes.contains(file.getContentType())){
+                IMAGE_GIF.getMimeType(), IMAGE_JPEG.getMimeType());
+        if (!imageTypes.contains(file.getContentType())) {
             throw new IllegalStateException("File uploaded is not an image");
         }
     }
@@ -65,6 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers(Roles role) {
+        //TODO
         return null;
     }
 }
