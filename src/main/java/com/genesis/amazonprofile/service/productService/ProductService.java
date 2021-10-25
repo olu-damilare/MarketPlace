@@ -10,9 +10,14 @@ import java.util.List;
 public interface ProductService {
 
     Product addProduct(Product product);
+
     Product getProduct(Long productId);
+
     void deleteProduct(Long productId);
+
     void UpdateProductDetail(ProductDetail details);
+
     List<Product> getAllProducts();
+
     List<Product> getAllProducts(Long merchantId);
 }
