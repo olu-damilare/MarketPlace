@@ -1,20 +1,20 @@
 package com.genesis.amazonprofile.exceptions;
 
-public class InvalidIdException extends MarketException{
+public class InvalidIdException extends MarketException {
 
-    public InvalidIdException(String message){
+    public InvalidIdException(String message) {
         super(message);
     }
 
-    public InvalidIdException(String message, Throwable e){
+    public InvalidIdException(String message, Throwable e) {
         super(message, e);
     }
 
-    public InvalidIdException(Throwable e){
+    public InvalidIdException(Throwable e) {
         super(e);
     }
 
-    public InvalidIdException(){
+    public InvalidIdException() {
         super();
     }
 }
